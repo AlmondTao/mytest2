@@ -1,8 +1,8 @@
 server:
-  port: 8085
+  port: 8086
 spring:
   application:
-    name: swagger-test
+    name: ribbon-test
 eureka:
   client:
     service-url:
