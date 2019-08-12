@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 public class ServiceAspect {
 
     private static Logger logger = LoggerFactory.getLogger(ServiceAspect.class);
-    @Pointcut(value = "@annotation(com.digital.aspect.annotation.ServiceErrorDeal)")
+    @Pointcut(value = "@annotation(com.taoqy.aspect.annotation.ServiceErrorDeal)")
     public void servicePointCut(){
 
     }
