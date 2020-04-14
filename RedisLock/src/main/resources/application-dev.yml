@@ -1,0 +1,222 @@
+server:
+  port: 8080
+  session:
+    cookie:
+      #session最多存储30分钟
+      max-age: 7200
+    #会话超时时间
+    timeout: 7200
+eureka:
+  client:
+    serviceUrl:
+#      defaultZone: http://BAPFOPM:201827@172.20.21.5:7111/eureka/,http://BAPFOPM:201827@172.20.21.5:7112/eureka/,http://BAPFOPM:201827@172.20.21.5:7113/eureka/
+#      defaultZone: http://BAPFOPM:201827@192.168.2.252:7111/eureka/,http://BAPFOPM:201827@192.168.2.252:7112/eureka/,http://BAPFOPM:201827@192.168.2.252:7113/eureka/
+       defaultZone: http://10.1.2.42:6132/eureka/
+#       defaultZone: http://10.1.18.38:7111/eureka/,http://10.1.18.39:7111/eureka/
+     # defaultZone: http://10.1.92.19:6132/eureka/
+    registry-fetch-interval-seconds: 30
+  #其他应用通过feign调用时需要指定instance-id
+  instance:
+    instance-id: 10.1.92.14
+    prefer-ip-address: true
+    ip-address: 10.1.92.14
+#  instance:
+#    instance-id: 10.1.92.9:7111
+#    prefer-ip-address: true
+
+spring:
+  application:
+    name: bapfopm-cbfsms-fpass-service
+  datasource:
+    #5版本用com.mysql.jdbc.Driver，6以上用com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
+#    password: password123
+#    username: szyl
+    #本地测试用的：
+#    url: jdbc:mysql://127.0.0.1:3306/authority2?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+#    url: jdbc:mysql://10.1.2.42:3306/db_sxzd?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://10.1.8.9:3323/DB_SXZD?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true
+    password: qmjk
+    username: qmjk
+#    url: jdbc:mysql://10.1.7.22:3323/DB_SXZD?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+#    password: JKqm@trainiNG_22212333
+#    username: qmjk
+#    url: jdbc:mysql://172.22.13.220:3323/DB_SXZD?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8
+#    password: PWD_jlfz
+#    username: QMJK_jlfz
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 1
+    maxActive: 200
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: SELECT 1
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: true
+    poolPreparedStatements: false
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall,slf4j
+    logSlowSql: true
+  #    password: root_123A!
+  #redis集群配置
+  #session共享池的redis配置
+#  profiles:
+#    active: dev
+
+  redis:
+#    password: redis
+#    sentinel:
+#      master: master_1
+#      nodes: 127.0.0.1:63791,127.0.0.1:63792,127.0.0.1:63793
+
+#    sentinel:
+#      master: mymaster
+#      nodes: 10.1.8.15:26379,10.1.8.15:26380,10.1.8.15:26381
+    pool:
+      #连接池最大连接数（使用负值代表没有限制）
+      max-active: 8
+      #连接池最大阻塞等待时间（使用负值代表没有限制）
+      max-wait: -1
+      #连接池中的最大空闲连接
+      max-idle: 8
+      #连接池中的最小空闲连接
+      min-idle: 0
+      #每次从连接池获取连接的时候都检验是否可用
+      testOnBorrow: false
+    #连接超时时间（毫秒）
+    timeout: 20000
+    commandTimeout: 5000
+    host: 10.1.2.42
+    port: 6079
+#    password: redis
+
+  #使用哨兵模式可以不用配ip地址和端口号
+  #    port: 6380
+  #    host: localhost
+  data:
+    mongodb:
+
+#      uri: mongodb://QMJK_jlfz:PWD_jlfz@10.1.2.42:6081/mongodb_fpass
+      database: mongodb_fpass
+      host: 10.1.2.42
+      username: QMJK_jlfz
+      password: PWD_jlfz
+      port: 6081
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    multipart:
+      max-file-size: 100Mb
+      max-request-size: 100Mb
+#      authentication-database: mongodb
+
+#      database: ty
+#      host: 10.1.2.42
+#      password: ty_ceShi@189
+#      port: 6081
+#      username: ty_test
+
+#      authentication-database: mongodb
+
+
+#token-redis:
+#  sentinel:
+#    master: master_1
+#    nodes: 127.0.0.1:63791,127.0.0.1:63792,127.0.0.1:63793
+#  pool:
+#    max-active: 8
+#    max-wait: -1
+#    max-idle: 8
+#    min-idle: 0
+#    testOnBorrow: false
+
+#  timeout: 0
+#  commandTimeout: 5000
+#  key:
+#    database:
+#      index: 1
+
+#    cluster:
+#  session:
+#    redis:
+#      namespace:
+#      nodes: 0.0.0.0:6379,0.0.0.0:6380
+#  session:
+#    store-type: redis
+mybatis:
+  type-aliases-package: com.digital.pdass.*.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+#ribbon:
+#  ConnectTimeOut: 300000
+security:
+  user:
+    name: BAPFOPM
+    password: 201827
+fpass:
+  schedule:
+    sxzd:
+      url: jdbc:mysql://10.1.8.9:3323/DB_SXZD?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true
+      password: qmjk
+      username: qmjk
+    xzqh:
+      url: jdbc:mysql://10.1.8.9:3323/DB_XZQH?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true
+      password: qmjk
+      username: qmjk
+logging:
+  config: classpath:logback.xml
+
+session-redis:
+  sentinel:
+    master: mymaster
+    #      nodes: 10.1.8.15:26379,10.1.8.15:26380,10.1.8.15:26381
+    nodes: 10.1.18.21:26379,10.1.18.22:26379,10.1.18.23:26379
+    pool:
+      #连接池最大连接数（使用负值代表没有限制）
+      max-active: 8
+      #连接池最大阻塞等待时间（使用负值代表没有限制）
+      max-wait: -1
+      #连接池中的最大空闲连接
+      max-idle: 8
+      #连接池中的最小空闲连接
+      min-idle: 0
+      #每次从连接池获取连接的时候都检验是否可用
+      testOnBorrow: false
+    #连接超时时间（毫秒）
+    timeout: 20000
+    commandTimeout: 5000
+    #    host: 127.0.0.1
+    #    port: 6380
+    password: admin0@session
+
+#quartz配置
+#org:
+#  quartz:
+#    scheduler:
+#      instanceName: ServerScheduler
+#      instanceId: AUTO
+#      skipUpdateCheck: true
+#    jobStore:
+#      misfireThreshold: 60000
+#      class: org.quartz.impl.jdbcjobstore.JobStoreTX
+#      driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate       #org.quartz.impl.jdbcjobstore.oracle.OracleDelegate
+#      useProperties: true
+#      #  tablePrefix: qztz_
+#      isClustered: true
+#      clusterCheckinInterval: 20000
+#    threadPool:
+#      class: org.quartz.simpl.SimpleThreadPool
+#      threadCount: 10
+#      threadPriority: 5
+#      threadsInheritContextClassLoaderOfInitializingThread: true
+#
+#cron:
+#  tmp: "*/5 * * * * ?"
+management:
+  security:
+    enabled: false
