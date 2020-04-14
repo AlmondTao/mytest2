@@ -2,6 +2,9 @@ package com.taoqy.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 /**
  * 〈一句话功能简述〉
  * 〈功能详细描述〉
@@ -14,5 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ReportController {
 
+    public void testController(){
+        ArrayList<String> objects = new ArrayList<>();
+        objects.stream().filter(t->{
+            return true;
+        });
+    }
 
 }
